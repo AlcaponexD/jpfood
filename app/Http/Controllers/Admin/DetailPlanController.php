@@ -10,8 +10,7 @@ use Illuminate\Http\Request;
 
 class DetailPlanController extends Controller
 {
-    protected $repository;
-    protected $plan;
+    protected $repository,$plan;
 
     public function __construct(DetailsPlan $detailsPlan,Plan $plan)
     {

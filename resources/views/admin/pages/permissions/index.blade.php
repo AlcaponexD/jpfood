@@ -1,21 +1,21 @@
 @extends('adminlte::page')
 
-@section('title', 'Todos os perfis')
+@section('title', 'Todos as permissões')
 
 @section('content_header')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Perfis</li>
+            <li class="breadcrumb-item active">Permissões</li>
         </ol>
     </nav>
-    <h1>Planos <a  href="{{route('profiles.create')}}" class="float-right btn btn-dark">Adicionar novo perfil <i class="far fa-plus-square"></i></a></h1>
+    <h1>Planos <a  href="{{route('permissions.create')}}" class="float-right btn btn-dark">Adicionar nova permisssão <i class="far fa-plus-square"></i></a></h1>
 @stop
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <form action="{{route('profiles.search')}}" class="form form-inline">
+            <form action="{{route('permissions.search')}}" class="form form-inline">
                 @csrf
                 <input type="search" class="form-control" name="filter" value="{{ $filters['filter'] ?? '' }}">
                 <button class="btn btn-dark"><i class="fas fa-search"></i></button>
@@ -31,14 +31,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                @if(count($profiles) > 0)
-                    @foreach($profiles as $profile)
+                @if(count($permissions) > 0)
+                    @foreach($permissions as $permission)
                         <tr>
-                            <td>{{$profile->name}}</td>
-                            <td>{{$profile->description}}</td>
+                            <td>{{$permission->name}}</td>
+                            <td>{{$permission->description}}</td>
                             <td style="width: 250px">
-                                <a href="{{route('permission.profile',$profile->id)}}" class="btn btn-primary">Exibir permissões <i class="fas fa-lock"></i></a>
-                                <form class="d-inline" action="{{route('profiles.destroy',['id' => $profile->id])}}" onsubmit="return confirm('Deseja realmente excluir o perfil?')" method="post">
+                                <form action="{{route('permissions.destroy',['id' => $permission->id])}}" onsubmit="return confirm('Deseja realmente excluir o perfil?')" method="post">
                                     @csrf
                                     @method('delete')
                                     <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
@@ -58,9 +57,9 @@
         </div>
         <div class="card-footer">
             @if(isset($filters))
-                {!! $profiles->appends($filters)->links() !!}
+                {!! $permissions->appends($filters)->links() !!}
             @else
-                {!! $profiles->links() !!}
+                {!! $permissions->links() !!}
             @endif
         </div>
     </div>

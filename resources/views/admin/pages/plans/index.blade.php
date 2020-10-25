@@ -31,17 +31,25 @@
                 </tr>
                 </thead>
                 <tbody>
-                    @foreach($plans as $plan)
+                    @if(count($plans) > 0)
+                        @foreach($plans as $plan)
+                            <tr>
+                                <td>{{$plan->name}}</td>
+                                <td>R${{number_format($plan->price,2,',','.')}}</td>
+                                <td style="width: 250px">
+                                    <a href="{{route('plans.details.index',['url' => $plan->url])}}" class="btn btn-dark">Detalhes <i class="fas fa-eye"></i></a>
+                                    <a href="{{route('plans.edit',['url' => $plan->url])}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
+                                    <a href="{{route('plans.show',['url' => $plan->url])}}" class="btn btn-primary"><i class="fas fa-expand-alt"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
                         <tr>
-                            <td>{{$plan->name}}</td>
-                            <td>R${{number_format($plan->price,2,',','.')}}</td>
-                            <td style="width: 250px">
-                                <a href="{{route('plans.details.index',['url' => $plan->url])}}" class="btn btn-dark">Detalhes <i class="fas fa-eye"></i></a>
-                                <a href="{{route('plans.edit',['url' => $plan->url])}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
-                                <a href="{{route('plans.show',['url' => $plan->url])}}" class="btn btn-primary"><i class="fas fa-expand-alt"></i></a>
+                            <td colspan="500">
+                                <div class="alert alert-default-warning text-center">Nenhum plano cadastrado</div>
                             </td>
                         </tr>
-                    @endforeach
+                    @endif
                 </tbody>
             </table>
         </div>
