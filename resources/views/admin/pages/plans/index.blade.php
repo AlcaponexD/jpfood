@@ -36,7 +36,8 @@
                             <tr>
                                 <td>{{$plan->name}}</td>
                                 <td>R${{number_format($plan->price,2,',','.')}}</td>
-                                <td style="width: 250px">
+                                <td style="width: 400px">
+                                    <a href="{{route('plan.profile',$plan->id)}}" class="btn btn-primary">Exibir perfis <i class="fas fa-lock"></i></a>
                                     <a href="{{route('plans.details.index',['url' => $plan->url])}}" class="btn btn-dark">Detalhes <i class="fas fa-eye"></i></a>
                                     <a href="{{route('plans.edit',['url' => $plan->url])}}" class="btn btn-success"><i class="fas fa-edit"></i></a>
                                     <a href="{{route('plans.show',['url' => $plan->url])}}" class="btn btn-primary"><i class="fas fa-expand-alt"></i></a>

@@ -7,11 +7,10 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{route('admin.index')}}">Dashboard</a></li>
             <li class="breadcrumb-item"><a href="{{route('plans.index')}}">Planos</a></li>
-            <li class="breadcrumb-item"><a href="{{route('plans.show',['url' => $plan->url])}}">Plano {{$plan->name}}</a></li>
-            <li class="breadcrumb-item active">Detalhes do plano</li>
+            <li class="breadcrumb-item active">Vincular perfil para o plano >> {{$plan->name}} </li>
         </ol>
     </nav>
-    <h1>Detalhes do {{$plan->name}} <a  href="{{route('plans.details.create',['url' => $plan->url])}}" class="float-right btn btn-dark">Adicionar detalhe <i class="far fa-plus-square"></i></a></h1>
+    <h1>Perfis disponivels para o plano >> {{$plan->name}} <a  href="{{route('profiles.create')}}" class="float-right btn btn-dark">Adicionar novo perfil <i class="far fa-plus-square"></i></a></h1>
 @stop
 
 @section('content')
@@ -20,39 +19,33 @@
             <table class="table table-condensed">
                 <thead>
                 <tr>
+                    <th width="50">#</th>
                     <th>Nome</th>
-                    <th>Ações</th>
                 </tr>
                 </thead>
                 <tbody>
-                @if(count($details) > 0)
-                    @foreach($details as $detail)
+                <form action="{{route('plan.profile.attach',$plan->id)}}" method="post">
+                    @csrf
+                    @foreach($profiles as $profile)
                         <tr>
-                            <td>{{$detail->name}}</td>
-                            <td style="width: 150px">
-                                <form action="{{route('plans.details.destroy',['id' => $detail->id])}}" method="post" onsubmit="return confirm('Você realmente deseja deletar?');" >
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-danger"><i class="fas fa-trash"></i></button>
-                                </form>
-                            </td>
+                            <td><input type="checkbox" name="profiles[]" value="{{$profile->id}}"></td>
+                            <td>{{$profile->name}}</td>
                         </tr>
                     @endforeach
-                @else
                     <tr>
                         <td colspan="500">
-                            <div class="alert alert-default-warning text-center">Nenhum detalhe cadastrado</div>
+                            <button class="btn btn-success">Vincular</button>
                         </td>
                     </tr>
-                @endif
+                </form>
                 </tbody>
             </table>
         </div>
         <div class="card-footer">
             @if(isset($filters))
-                {!! $details->appends($filters)->links() !!}
+                {!! $profiles->appends($filters)->links() !!}
             @else
-                {!! $details->links() !!}
+                {!! $profiles->links() !!}
             @endif
         </div>
     </div>

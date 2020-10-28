@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Todos os perfis')
+@section('title', 'profiles')
 
 @section('content_header')
     <nav aria-label="breadcrumb">

@@ -25,4 +25,28 @@ class Plan extends Model
     {
         return $this->hasMany(DetailsPlan::class);
     }
+
+    /*
+ * Get profiles
+ */
+
+    public function profiles()
+    {
+        return $this->belongsToMany(Profile::class);
+    }
+
+    /*
+     * Show profiles not vinculed with plan
+     */
+
+    public function profilesAvaliable()
+    {
+        $profiles = Profile::whereNotIn('id',function ($query){
+            $query->select('plan_profile.profile_id');
+            $query->from('plan_profile');
+            $query->whereRaw("plan_profile.plan_id={$this->id}");
+        })->paginate();
+
+        return $profiles;
+    }
 }

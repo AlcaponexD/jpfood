@@ -13,6 +13,15 @@ Route::prefix('admin')->group(function () {
     Route::get('profiles/{id}/permissions','Admin\ACL\PermissionProfileController@permissions')->name('permission.profile');
     Route::get('profiles/{id}/permissions/avaliable','Admin\ACL\PermissionProfileController@permissionsAvaliable')->name('permission.profile.avaliable');
 
+    /*
+     * Plans X Profiles
+     */
+
+    Route::post('plans/{id}/plans','Admin\PlanProfileController@plansAttach')->name('plan.profile.attach');
+    Route::delete('plans/{id}/plan/{idplan}','Admin\PlanProfileController@detachProfilePlan')->name('plan.profile.detach');
+    Route::get('plans/{id}/plans','Admin\PlanProfileController@plans')->name('plan.profile');
+    Route::get('plans/{id}/plans/avaliable','Admin\PlanProfileController@plansAvaliable')->name('plan.profile.avaliable');
+
     //Others routes
     Route::prefix('plans')->group(function () {
         Route::any('/search','Admin\PlanController@search')->name('plans.search');
@@ -43,3 +52,6 @@ Route::prefix('admin')->group(function () {
         Route::post('/','Admin\PermissionController@store')->name('permissions.store');
     });
 });
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
