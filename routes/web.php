@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('admin')->group(function () {
+Route::prefix('admin')->middleware('auth')->group(function () {
     Route::get('/','Admin\PlanController@index')->name('admin.index');
     /**
      * Permissions
@@ -52,6 +52,12 @@ Route::prefix('admin')->group(function () {
         Route::post('/','Admin\PermissionController@store')->name('permissions.store');
     });
 });
+
+/*
+ * Site unautentiched
+ */
+Route::get('/','Site\SiteController@home')->name('home');
+
 /*
  * Authentication routes
  */
