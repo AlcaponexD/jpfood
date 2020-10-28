@@ -52,6 +52,7 @@ Route::prefix('admin')->group(function () {
         Route::post('/','Admin\PermissionController@store')->name('permissions.store');
     });
 });
+/*
+ * Authentication routes
+ */
 Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
