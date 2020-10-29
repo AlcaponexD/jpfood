@@ -3,8 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Tenant;
-use Psy\Util\Str;
-use Ramsey\Uuid\Uuid;
 
 class TenantObserver
 {
