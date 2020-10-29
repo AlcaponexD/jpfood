@@ -57,6 +57,7 @@ Route::prefix('admin')->middleware('auth')->group(function () {
  * Site unautentiched
  */
 Route::get('/','Site\SiteController@home')->name('home');
+Route::get('/plan/{url}','Site\SiteController@plan')->name('site.plan');
 
 /*
  * Authentication routes

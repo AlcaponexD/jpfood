@@ -4,10 +4,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\Services\TenantService;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -49,11 +51,16 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'cnpj_cpf' => ['required', 'string', 'min:8','unique:tenants'],
+            'empresa' => ['required','string','unique:tenants,name']
         ]);
+
     }
 
     /**
@@ -64,10 +71,15 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+
+        if (!$plan = session('plan'))
+        {
+            return redirect()->route('home');
+        }
+        $tenant_service = app(TenantService::class);
+        $user = $tenant_service->make($data,$plan);
+
+        return $user;
+
     }
 }
