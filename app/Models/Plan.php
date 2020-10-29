@@ -30,6 +30,14 @@ class Plan extends Model
  * Get profiles
  */
 
+    /*
+     * Relation Tenant
+     */
+    public function tenants()
+    {
+        return $this->hasMany(Tenant::class);
+    }
+
     public function profiles()
     {
         return $this->belongsToMany(Profile::class);
